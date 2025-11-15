@@ -15,7 +15,7 @@ For større endringer, vennligst opprett en issue først slik at vi kan diskuter
 
 ### Standard bidragsprosess
 
-1. Fork the repository: Opprett din egen kopi av dette repositoriet under din konto
+1. Fork repositoriet: Opprett din egen kopi av dette repositoriet under din konto
 2. Klon repositoriet: Klon det forkede repositoryet til din lokale maskin (eller hvor enn du vil jobbe med koden).
 3. Utfør endringer: Gjør ønskede endringer og opprett en commit.
 4. Push til din fork: Push commits fra din lokale maskin til det forkede repositoriet på GitHub.
