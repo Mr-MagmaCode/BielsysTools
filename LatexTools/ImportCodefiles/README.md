@@ -45,7 +45,7 @@ Run the module as a script to print or save a `.tex` fragment:
 
 ```bash
 python filesForLatex.py            # prints LaTeX for files found next to the script
-python filesForLatex.py -o out    # saves to out.tex
+python filesForLatex.py -o out     # saves to out.tex
 
 # Example with options
 python filesForLatex.py --folder Kode --section "Code" --language-override cpp --lang-map ".h=cpp,.py=python3"
@@ -65,8 +65,7 @@ normalizes keys to begin with `.`.
 ## Per-extension mapping and detection
 
 The library contains a small internal extension-to-language map used when no global
-override is provided. Example defaults include `.py -> python`, `.c -> c`, `.h -> c`,
-`.cpp/.hpp -> cpp`.
+override is provided. Example defaults include `.py -> python`, `.c/.h -> c`, `.cpp/.hpp -> cpp`.
 
 You can provide `ext_lang_map` programmatically to `generate_latex_for_files` or
 via the CLI with `--lang-map` to override specific extensions.
@@ -92,9 +91,4 @@ pytest -q
 
 ## License
 
-Pick a license for your project; add a `LICENSE` file at the repository root.
-
----
-Small, focused helper to include project source in LaTeX documents. If you'd like,
-I can also add a short example LaTeX template showing how to include the generated
-fragment into a full `.tex` document.
+Provided as-is.
