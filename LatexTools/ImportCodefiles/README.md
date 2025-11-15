@@ -20,18 +20,10 @@ A small Python utility to generate LaTeX code (minted) that includes source file
 ## Requirements
 
 - Python 3.6+
-- For rendering the generated `.tex` using `minted` you'll need LaTeX with the `minted` package and `pygments` installed. Example:
-
-```bash
-# On Debian/Ubuntu
-sudo apt install texlive-latex-recommended texlive-latex-extra python3-pygments
-```
-
-When compiling the final LaTeX document that uses `minted`, remember to pass `-shell-escape` to `pdflatex` or `xelatex`.
 
 ### Recommended `minted` configuration
 
-If you customize `minted` options in your LaTeX preamble, you can set per-language options. Here's the custom block you mentioned (works if your LaTeX environment recognizes the language name you use):
+If you customize `minted` options in your LaTeX preamble, you can set per-language options. Below is an ecample of custom language (C++) for minted:
 
 ```tex
 \usepackage{minted}
@@ -144,8 +136,4 @@ The tests check that `find_source_files` respects excludes (files starting with 
 
 ## License
 
-This repository is provided as-is. Add a license file if you wish to specify usage terms.
-
----
-
-If you'd like, I can change the default `.h` mapping to `cpp`, add a per-extension CLI mapping option, or include a small helper that copies discovered source files into the LaTeX `Kode` folder before generation.
+This repository is provided as-is.
