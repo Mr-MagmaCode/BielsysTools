@@ -1,0 +1,99 @@
+# filesForLatex
+
+A small Python utility to generate LaTeX code (minted) that includes source files from a project directory. It's useful for creating appendices or code listings in reports and theses.
+
+---
+
+## Overview
+
+`filesForLatex.py` scans a directory tree for source files (C, C++, headers, and Python), filters out undesired files and folders, and generates LaTeX snippets that include those files using the `minted` package. The output can be printed to stdout or saved as a `.tex` file.
+
+## Features
+
+- Recursively finds source files with extensions: `.c`, `.cpp`, `.h`, `.hpp`, `.py`.
+- Excludes files and directories that begin with `_` or `.` and items named `cmake` by default.
+- Optionally skip specific files via `exclude_files` when calling the function programmatically.
+- Generates LaTeX with per-file `\subsection`, `\label`, and `\newpage` separators.
+- Uses `\inputminted{C++}{...}` so code is syntax highlighted with the `minted` package.
+- CLI options to set the LaTeX section title, output file, and folder path used in `\inputminted`.
+
+## Requirements
+
+- Python 3.6+
+- For rendering the generated `.tex` using `minted` you'll need LaTeX with the `minted` package and `pygments` installed. Example:
+
+```bash
+# On Debian/Ubuntu
+sudo apt install texlive-latex-recommended texlive-latex-extra python3-pygments
+```
+
+When compiling the final LaTeX document that uses `minted`, remember to pass `-shell-escape` to `pdflatex` or `xelatex`.
+
+## Usage
+
+From the script folder, run the tool to print LaTeX to stdout:
+
+```bash
+python3 filesForLatex.py
+```
+
+Save output to a `.tex` file and set a custom folder name used in the LaTeX `\inputminted` paths:
+
+```bash
+python3 filesForLatex.py -o code_appendix.tex --folder Kode --section "Appendix: Source Code"
+```
+
+The generated LaTeX will use `\inputminted{C++}{<folder>/<relative_path>}` for each discovered file. Adjust `--folder` if your LaTeX includes source files from a specific directory.
+
+## Example (snippet produced)
+
+The script will emit content like:
+
+```tex
+\section{Appendix: Source Code}
+\newpage
+\label{sec:src_main_cpp}
+\subsection{src/main.cpp}
+\inputminted{C++}{Kode/src/main.cpp}
+```
+
+## API (for programmatic use)
+
+Primary functions available in `filesForLatex.py`:
+
+- `find_source_files(root_dir, exts=..., exclude_prefixes=..., exclude_files=None)`
+  - Returns a sorted list of relative file paths matching the configured extensions and filters.
+
+- `generate_latex_for_files(file_list, section_title="Kode vedlegg", folder_in_latex="Kode")`
+  - Returns a string containing the assembled LaTeX code for the provided files.
+
+- `print_latex_for_files(file_list, section_title=None, folder_in_latex="Kode")`
+  - Prints the generated LaTeX to stdout.
+
+- `save_latex_to_file(file_list, output_file, section_title=None, folder_in_latex="Kode")`
+  - Saves the generated LaTeX to `output_file` (adds `.tex` if missing) and returns `True` on success.
+
+## Notes and tips
+
+- The script uses `\inputminted{C++}{...}` for all files. If your project contains many Python files and you want correct highlighting, consider modifying `generate_latex_for_files` to choose the minted language by file extension (e.g. `python` for `.py`). This is a low-risk change and straightforward to implement.
+- If source files are not copied into your LaTeX project folder, set `--folder` to the relative path inside the LaTeX project where files will be found at compile time.
+- To include only a subset of files, call `find_source_files` programmatically and pass a curated list to `generate_latex_for_files`.
+
+## Troubleshooting
+
+- If you see errors from `minted` when compiling LaTeX, ensure you compile with `-shell-escape`, and that `pygments` is installed and available to the LaTeX environment.
+- If files are missing from the output, check whether they start with `_` or `.` or are inside excluded directories. Adjust the script filters if necessary.
+
+## License
+
+This repository is provided as-is. Add a license file if you wish to specify usage terms.
+
+## Next steps (suggested)
+
+- Optionally add tests to ensure `find_source_files` respects exclude rules.
+- Add an option to choose minted language per file extension.
+- Provide a small script to copy/include the source files into the LaTeX project's `Kode` folder before compiling.
+
+---
+
+If you'd like, I can also update the script to auto-detect minted language per extension and add a small test to validate the file discovery behavior.
