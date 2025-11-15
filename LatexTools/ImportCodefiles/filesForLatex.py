@@ -1,5 +1,5 @@
-import os
 import argparse
+import os
 
 
 def find_source_files(root_dir, exts=(".c", ".cpp", ".h", ".hpp", ".py"), exclude_prefixes=("_", ".", "cmake"), exclude_files=None):
@@ -21,33 +21,54 @@ def find_source_files(root_dir, exts=(".c", ".cpp", ".h", ".hpp", ".py"), exclud
     return sorted(file_list)
 
 
-def generate_latex_for_files(file_list, section_title="Kode vedlegg", folder_in_latex="Kode"):
+def generate_latex_for_files(file_list, section_title="Kode vedlegg", folder_in_latex="Kode", language_override=None):
     """Generate LaTeX code for the given file list."""
     latex_content = []
     if section_title != "" and section_title is not None:
         latex_content.append(f"\\section{{{section_title}}}")
         latex_content.append("")
+
+    def get_minted_language(filename):
+        """Return a sensible minted/Pygments language for a filename based on extension.
+
+        Defaults to 'text' if extension is unknown.
+        """
+        _, ext = os.path.splitext(filename)
+        ext = ext.lower()
+        mapping = {
+            '.py': 'python',
+            '.c': 'c',
+            '.h': 'c',
+            '.cpp': 'cpp',
+            '.cc': 'cpp',
+            '.cxx': 'cpp',
+            '.hpp': 'cpp',
+        }
+        return mapping.get(ext, 'text')
     for f in file_list:
         latex_content.append(f"\\newpage")
         latex_content.append(
             f"\\label{{sec:{f.replace('.', '_').replace('/', '_')}}}")
         latex_content.append(f"\\subsection{{{f.replace('_', '\\_')}}}")
+        # If a global override is provided, use it verbatim. Otherwise detect by extension.
+        lang = language_override if language_override else get_minted_language(
+            f)
         latex_content.append(
-            f"\\inputminted{{C++}}{{{folder_in_latex}/{f}}}\n")
+            f"\\inputminted{{{lang}}}{{{folder_in_latex}/{f}}}\\n")
     return "\n".join(latex_content)
 
 
-def print_latex_for_files(file_list, section_title=None, folder_in_latex="Kode"):
+def print_latex_for_files(file_list, section_title=None, folder_in_latex="Kode", language_override=None):
     """Print LaTeX code to console."""
     latex_content = generate_latex_for_files(
-        file_list, section_title=section_title, folder_in_latex=folder_in_latex)
+        file_list, section_title=section_title, folder_in_latex=folder_in_latex, language_override=language_override)
     print(latex_content)
 
 
-def save_latex_to_file(file_list, output_file, section_title=None, folder_in_latex="Kode"):
+def save_latex_to_file(file_list, output_file, section_title=None, folder_in_latex="Kode", language_override=None):
     """Save LaTeX code to a .tex file."""
     latex_content = generate_latex_for_files(
-        file_list, section_title=section_title, folder_in_latex=folder_in_latex)
+        file_list, section_title=section_title, folder_in_latex=folder_in_latex, language_override=language_override)
 
     # Ensure the output file has .tex extension
     if not output_file.endswith(".tex"):
@@ -72,6 +93,8 @@ if __name__ == "__main__":
                         help="Folder name to use in LaTeX (default: Kode)")
     parser.add_argument("--section", type=str, default="",
                         help="Section title in LaTeX (if empty, no section will be added)")
+    parser.add_argument("--language-override", type=str, default=None,
+                        help="Force minted language for all files (overrides detection). Example: 'C++' or 'cpp' or 'python'.")
 
     args = parser.parse_args()
 
@@ -81,7 +104,7 @@ if __name__ == "__main__":
 
     if args.output:
         save_latex_to_file(file_list=files, output_file=args.output,
-                           section_title=args.section, folder_in_latex=args.folder)
+                           section_title=args.section, folder_in_latex=args.folder, language_override=args.language_override)
     else:
         print_latex_for_files(
-            file_list=files, section_title=args.section, folder_in_latex=args.folder)
+            file_list=files, section_title=args.section, folder_in_latex=args.folder, language_override=args.language_override)
