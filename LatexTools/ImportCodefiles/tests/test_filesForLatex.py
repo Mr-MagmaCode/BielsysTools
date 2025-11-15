@@ -53,3 +53,14 @@ def test_generate_latex_language_mapping_and_override():
         files, section_title='Test', folder_in_latex='Kode', language_override='C++')
     # All inputminted occurrences should use the override 'C++'
     assert out2.count('\\inputminted{C++}') == len(files)
+
+
+def test_per_extension_lang_map_override():
+    mod = load_module()
+    files = ['src/main.cpp', 'script.py', 'include/header.h']
+    # override .h to cpp and .py to python3
+    mapping = {'.h': 'cpp', '.py': 'python3'}
+    out = mod.generate_latex_for_files(
+        files, section_title='Test', folder_in_latex='Kode', ext_lang_map=mapping)
+    assert '\\inputminted{cpp}{Kode/include/header.h}' in out
+    assert '\\inputminted{python3}{Kode/script.py}' in out

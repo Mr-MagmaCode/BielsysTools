@@ -108,6 +108,9 @@ Primary functions available in `filesForLatex.py`:
 - `save_latex_to_file(file_list, output_file, section_title=None, folder_in_latex="Kode", language_override=None)`
   - Saves the generated LaTeX to `output_file` (adds `.tex` if missing) and returns `True` on success.
 
+- `generate_latex_for_files(..., ext_lang_map=None)`
+  - Accepts an optional dict mapping extensions (e.g. `'.h'`) to minted language names (e.g. `'cpp'`). This can also be passed from the CLI using `--lang-map`.
+
 ## Tests
 
 You can find the pytests at the following path:
@@ -127,6 +130,21 @@ pytest -q LatexTools/ImportCodefiles/tests/test_filesForLatex.py
 ```
 
 The tests check that `find_source_files` respects excludes (files starting with `_` or `.` are ignored) and that `generate_latex_for_files` selects appropriate minted languages and respects `language_override`.
+
+### New: per-extension mapping and CLI
+
+You can now provide a per-extension mapping via the CLI with `--lang-map`. Example usage:
+
+```bash
+python3 filesForLatex.py --lang-map ".h=cpp,.py=python3"
+```
+
+This will make the generator use `cpp` for `.h` files and `python3` for `.py` files. Keys may omit the leading dot.
+
+Notes:
+
+- The script also supports `--language-override` to force one language for all files (e.g. `--language-override "C++"`).
+- The default mapping is conservative (`.h -> c`). Use `--lang-map` or change the mapping in `filesForLatex.py` if your project uses `.h` for C++ headers.
 
 ## Notes and tips
 
