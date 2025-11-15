@@ -118,9 +118,9 @@ Primary functions available in `filesForLatex.py`:
 
 ## Tests
 
-I added a small pytest test file to validate file discovery and language mapping:
+You can find the pytests at the following path:
 
-```
+```bash
 LatexTools/ImportCodefiles/tests/test_filesForLatex.py
 ```
 
