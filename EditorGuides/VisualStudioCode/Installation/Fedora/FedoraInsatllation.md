@@ -43,3 +43,5 @@ sudo dnf install code
 ## After installation
 When you launch Visual Studio Code for the first time, you should see the welcome screen with a startup guide (since the rest is mostly the same for all platforms, we will not go through it here, but you can find a separate guide for the setup):
 ![alt text](Images/WelcomeScreen.png)
+
+If you want to follow the git tutorial provided in this repo, you will need to set up git in Visual Studio Code. You can find a separate guide for setting up git in Visual Studio Code here: [Git Setup Guide](../../Git/GitSetup.md)

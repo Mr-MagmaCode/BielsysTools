@@ -72,5 +72,7 @@ If any of these items is correct for you:
 
 Then you will be requested to choose a password for the new keyring that will be used to store your credentials and other secrets securely. You can choose to set a password or leave it blank if you prefer not to use a keyring. If you choose to set a password, make sure to remember it, as you will need it to access the stored credentials in the future. If you choose to leave it blank, your credentials will not be encrypted and may be less secure, but it will allow you to use Visual Studio Code without needing to enter a password each time.
 
-When you launch Visual Studio Code for the first time, you should see the welcome screen with a startup guide (since the rest is mostly the same for all platforms, we will not go through it here, but you can find a separate guide for the setup):
+When you launch Visual Studio Code for the first time, you should see the welcome screen with a startup guide. The other tutorials assume you have already gone through the welcome screen.:
 ![alt text](Images/WelcomeScreen.png)
+
+If you want to follow the git tutorial provided in this repo, you will need to set up git in Visual Studio Code. You can find a separate guide for setting up git in Visual Studio Code here: [Git Setup Guide](../../Git/GitSetup.md)
