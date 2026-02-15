@@ -3,7 +3,7 @@
 ## Introduction
 This guide will walk you through the process of setting up Git in Visual Studio Code. Git is a version control system that allows you to track changes to your code and collaborate with others. Visual Studio Code has built-in support for Git, making it easy to manage your repositories and perform Git operations directly from the editor.
 
-![alt text](image.png)
+<!-- ![alt text](image.png) -->
 
 ## Step 1: Install Git
 Before you can use Git in Visual Studio Code, you need to have Git installed on your system. You can download Git from the official website: https://git-scm.com/downloads (or use the link from the VS code welcome screen). Follow the installation instructions for your operating system.
