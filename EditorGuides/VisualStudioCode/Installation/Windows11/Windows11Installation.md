@@ -1,4 +1,4 @@
-# Windows 11 Installation Guide for Visual Studio Code
+# Windows 11 Installation Guide for Visual Studio Code (This is tested on a clean install of Tiny 11 (striped down Windows 11), but it should be similar for older versions of Windows as well, though some steps may differ slightly)
 
 ## From website
 To install Visual Studio Code on Windows 11, you can follow these steps:
